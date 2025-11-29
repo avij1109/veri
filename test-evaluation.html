@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test VeriAI Evaluation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            padding: 12px 24px;
+            background: #f59e0b;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        .progress {
+            background: #e5e7eb;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            background: #10b981;
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test VeriAI Model Evaluation</h1>
+    
+    <div>
+        <label>Model ID:</label><br>
+        <input type="text" id="modelId" value="bert-base-uncased" style="width: 100%; padding: 8px; margin: 10px 0;">
+    </div>
+    
+    <button onclick="startEvaluation()">🎯 Start Evaluation (100 samples)</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        async function startEvaluation() {
+            const modelId = document.getElementById('modelId').value;
+            const resultsDiv = document.getElementById('results');
+            
+            resultsDiv.innerHTML = `
+                <h3>Evaluating ${modelId}...</h3>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="statusText">Starting evaluation...</p>
+            `;
+            
+            try {
+                // Start evaluation
+                const response = await fetch('http://localhost:5000/api/crawl/evaluate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ modelId, datasetSize: 100 })
+                });
+                
+                const data = await response.json();
+                console.log('Evaluation started:', data);
+                
+                // Poll for status
+                const pollInterval = setInterval(async () => {
+                    const statusResponse = await fetch(`http://localhost:5000/api/crawl/evaluation-status/${modelId}`);
+                    const statusData = await statusResponse.json();
+                    
+                    console.log('Status:', statusData);
+                    
+                    if (statusData.success) {
+                        const status = statusData.data;
+                        const progressBar = document.getElementById('progressBar');
+                        const statusText = document.getElementById('statusText');
+                        
+                        if (progressBar) {
+                            progressBar.style.width = `${status.progress || 0}%`;
+                        }
+                        
+                        if (statusText) {
+                            const messages = {
+                                'fetching_dataset': 'Fetching random dataset samples...',
+                                'running_inference': 'Running model inference...',
+                                'calculating_bertscore': 'Calculating BERTScore metrics...',
+                                'finalizing': 'Finalizing results...',
+                                'completed': 'Evaluation complete!',
+                                'error': 'Error occurred'
+                            };
+                            statusText.textContent = messages[status.status] || 'Processing...';
+                        }
+                        
+                        if (status.status === 'completed') {
+                            clearInterval(pollInterval);
+                            displayResults(status.results);
+                        } else if (status.status === 'error') {
+                            clearInterval(pollInterval);
+                            resultsDiv.innerHTML = `<h3 style="color: red;">Error: ${status.error}</h3>`;
+                        }
+                    }
+                }, 1000);
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<h3 style="color: red;">Error: ${error.message}</h3>`;
+            }
+        }
+        
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <h2>✅ Evaluation Complete!</h2>
+                <p><strong>Model:</strong> ${results.modelId}</p>
+                <p><strong>Dataset Size:</strong> ${results.datasetSize} samples</p>
+                <p><strong>Average BERTScore (F1):</strong> ${results.averageBertScore}</p>
+                <p><strong>Completed:</strong> ${new Date(results.completedAt).toLocaleString()}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

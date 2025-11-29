@@ -1,0 +1,61 @@
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+*.log.*
+/pids
+*.pid
+*.seed
+*.pid.lock
+
+# Runtime data
+/coverage
+/build
+/dist
+/temp
+/tmp
+/out
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional prettier cache
+.prettiercache
+
+# Optional TypeScript cache
+*.tsbuildinfo
+
+# Optional Jest cache
+jest-cache/
+jest-results/
+
+# Optional Swagger files
+swagger.yaml
+
+# Optional PM2 files
+pids/
+*.pid

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Trust Detector</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Fixed Left Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>VeriAI</h3>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" id="dashboard-btn">
+                    <div class="menu-icon">📊</div>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item" id="ai-agent-btn">
+                    <div class="menu-icon">🤖</div>
+                    <span>AI Agent</span>
+                </div>
+                <div class="menu-item" id="summary-btn">
+                    <div class="menu-icon">📋</div>
+                    <span>Summary</span>
+                </div>
+                <div class="menu-item" id="leaderboard-btn">
+                    <div class="menu-icon">🏆</div>
+                    <span>Leaderboard</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="content-area">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page active">
+                <!-- Visit Website Section at Top -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 8px; margin: 20px; text-align: center;">
+                    <h3 style="color: white; margin: 0 0 10px 0; font-size: 18px;">Access Full Features</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin: 0 0 15px 0; font-size: 14px;">Visit our website for complete analytics, model comparisons, and advanced features!</p>
+                    <button id="visit-website-btn" style="padding: 12px 20px; font-size: 14px; background: white; color: #667eea; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Visit Website</button>
+                </div>
+                
+                <div class="page-header">
+                    <h2>Dashboard</h2>
+                </div>
+                
+                <div class="wallet-section">
+                    <div class="wallet-status-container">
+                        <div id="wallet-status" class="wallet-status">
+                            <span class="disconnected">Not connected</span>
+                        </div>
+                        <button id="connect-wallet-btn" class="connect-btn">Connect MetaMask</button>
+                    </div>
+                </div>
+
+                <div class="model-section" id="model-section" style="display: none;">
+                    <div class="model-card">
+                        <div class="model-header">
+                            <h3 id="model-name">Current Model</h3>
+                            <div id="trust-score-display" class="trust-score">
+                                Trust Score: <span id="trust-score-value">Loading...</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                                        <button id="rate-model-main-btn" class="action-btn">
+              <span class="btn-icon">⭐</span>
+              Rate Model
+            </button>
+            <button id="view-ratings-main-btn" class="action-btn">
+              <span class="btn-icon">📊</span>
+              View Ratings
+            </button>
+            <button id="calculate-accuracy-btn" class="action-btn">
+              <span class="btn-icon">🎯</span>
+              Calculate Accuracy
+            </button>
+          </div>
+          
+          <!-- Accuracy Results Display -->
+          <div id="accuracy-result" class="accuracy-result" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Agent Page -->
+            <div id="ai-agent-page" class="page">
+                <div class="page-header">
+                    <h2>AI Crawl Agent</h2>
+                    <p class="page-subtitle">Ask questions about any model using RAG-powered analysis</p>
+                </div>
+                
+                <div class="agent-container">
+                    <div class="agent-welcome">
+                        <div class="agent-avatar">🔍</div>
+                        <h3>Model Information Assistant</h3>
+                        <p class="agent-subtitle">Search by model ID or ask what you need in natural language</p>
+                    </div>
+
+                    <!-- LLM Search Section -->
+                    <div class="llm-search-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 12px; margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <div style="font-size: 32px;">🤖</div>
+                            <div>
+                                <h4 style="color: white; margin: 0; font-size: 16px;">AI-Powered Model Search</h4>
+                                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0 0; font-size: 13px;">Ask in natural language what kind of model you need</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="llm-search-input" placeholder="e.g., 'I need a model for sentiment analysis' or 'best model for image generation'" 
+                                   style="flex: 1; padding: 12px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 14px; background: rgba(255,255,255,0.95); color: #000;">
+                            <button id="llm-search-btn" style="padding: 12px 20px; background: white; color: #667eea; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; white-space: nowrap;">
+                                ✨ Search
+                            </button>
+                        </div>
+                        
+                        <div class="llm-example-queries" style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                            <div class="llm-example-query" style="background: rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3);">
+                                💬 Best text generation model
+                            </div>
+                            <div class="llm-example-query" style="background: rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3);">
+                                🖼️ Image generation with high quality
+                            </div>
+                            <div class="llm-example-query" style="background: rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.3);">
+                                💻 Code completion model
+                            </div>
+                        </div>
+                        
+                        <div id="llm-search-results" style="margin-top: 16px;"></div>
+                    </div>
+
+                    <!-- Model ID Search Section -->
+                    <div style="background: #f9fafb; padding: 16px; border-radius: 12px; border: 2px solid #e5e7eb;">
+                        <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #374151;">Or search by specific model ID:</h4>
+                        <div class="agent-input-container">
+                            <input type="text" id="crawl-agent-input" placeholder="Enter model ID (e.g., bert-base-uncased)..." class="agent-input">
+                            <button id="use-current-model-btn" class="use-current-btn" title="Use current page model">
+                                <span>📄</span>
+                            </button>
+                            <button id="crawl-agent-send-btn" class="agent-send-btn">
+                                <span>🔍</span>
+                            </button>
+                        </div>
+
+                        <div class="example-prompts">
+                            <div class="example-prompt">
+                                💬 bert-base-uncased
+                            </div>
+                            <div class="example-prompt">
+                                🔍 gpt2
+                            </div>
+                            <div class="example-prompt">
+                                📊 stabilityai/stable-diffusion-2
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="crawl-results-container" class="crawl-results"></div>
+                </div>
+            </div>
+
+            <!-- Summary Page -->
+            <div id="summary-page" class="page">
+                <div class="page-header">
+                    <h2>Model Summary</h2>
+                    <p class="page-subtitle">Comprehensive analysis and risk assessment</p>
+                </div>
+                
+                <div class="summary-container">
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
+                        <h3>No Model Analyzed</h3>
+                        <p style="color: #6b7280; margin: 12px 0;">Visit a HuggingFace model page or use the AI Agent to analyze a model.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard Page -->
+            <div id="leaderboard-page" class="page">
+                <div class="page-header">
+                    <h2>Leaderboard</h2>
+                    <p class="page-subtitle">Top performing AI models ranked by trust scores</p>
+                </div>
+                
+                <div class="leaderboard-container">
+                    <!-- Filter Tabs -->
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-category="all">All Models</button>
+                        <button class="filter-tab" data-category="language">Language</button>
+                        <button class="filter-tab" data-category="code">Code</button>
+                        <button class="filter-tab" data-category="image">Image</button>
+                    </div>
+
+                    <!-- Leaderboard List -->
+                    <div class="leaderboard-list" id="leaderboard-list">
+                        <!-- Leaderboard items will be populated by JS -->
+                    </div>
+
+                    <!-- Refresh Button -->
+                    <div class="leaderboard-footer">
+                        <button id="refresh-leaderboard-btn" class="refresh-btn">
+                            <span class="btn-icon">🔄</span>
+                            Refresh Rankings
+                        </button>
+                        <div class="last-updated" id="leaderboard-last-updated">
+                            Last updated: Loading...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

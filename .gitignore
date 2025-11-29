@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+package-lock.json
+bun.lockb
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Blockchain/Hardhat
+cache/
+artifacts/
+typechain/
+typechain-types/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Backend specific
+backend/node_modules/
+backend/dist/
+
+# Extension specific
+extension/node_modules/
+
+# Website specific
+website/node_modules/
+website/dist/
+
+# Solidity
+solidity contract/node_modules/
+solidity contract/cache/
+solidity contract/artifacts/

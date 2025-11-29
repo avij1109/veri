@@ -1,0 +1,125 @@
+VeriAI PROJECT SUMMARY
+======================
+
+WHAT IT DOES:
+- AI model trust & evaluation platform for Hugging Face models
+- Combines automated benchmarking with blockchain-based user ratings
+- Provides browser extension for seamless HuggingFace integration
+
+CURRENT EVALUATION APPROACH:
+============================
+
+1. HYBRID EVALUATION SYSTEM:
+   - Uses ModelAnalyzer to determine model size and complexity
+   - Routes evaluation to either:
+     a) MOCK DATA: For large models (GPT-4, LLaMA-3-70B, DeepSeek-236B, etc.)
+        - Uses pre-defined benchmark scores from published papers
+        - Instant results, zero API costs
+        - Covers ~20 popular large models
+     
+     b) REAL EVALUATION: For small/medium models
+        - Uses Hugging Face Inference API for actual predictions
+        - Tests with predefined datasets (10-20 samples per task)
+        - Computes real accuracy metrics (precision, recall, F1)
+
+2. TASK TYPES SUPPORTED:
+   - text-classification (sentiment analysis, etc.)
+   - text-generation
+   - question-answering
+   - image-classification (basic)
+   
+3. EVALUATION METRICS:
+   - Accuracy, Precision, Recall, F1 Score
+   - BLEU, ROUGE (for text generation)
+   - BERTScore (semantic similarity)
+
+4. EVALUATION TRIGGER:
+   - ON-DEMAND: User clicks "Calculate Accuracy" in extension
+   - No precomputation - all evaluations run when requested
+   - Results cached in MongoDB for 24 hours
+
+HOW IT WORKS:
+=============
+
+BACKEND (Node.js + Express):
+- server.js: Main API server
+- hybrid-evaluation-service.js: Routes to mock vs real evaluation
+- model-analyzer.js: Decides if model should use mock data
+- evaluation-service.js: Runs real HF API inference
+- local-evaluation-service.js: Handles test dataset logic
+- database.js: MongoDB storage for evaluation results
+
+BLOCKCHAIN (Avalanche Fuji):
+- ModelTrustRatings.sol: Smart contract for user ratings
+- Users can rate models (1-5 stars) with AVAX staking
+- Ratings stored on-chain for transparency
+- Contract address: 0x8a446886a44743e78138a27f359873fe86613dfe
+
+BROWSER EXTENSION:
+- content-script.js: Detects models on HuggingFace pages
+- Injects overlay popup at bottom-right
+- Shows trust score (60% benchmark + 40% user ratings)
+- popup.js: Extension interface for rating/viewing models
+- background.js: Handles Web3 calls (CSP-safe)
+
+WEBSITE (React + Vite):
+- Dashboard for model comparison
+- Leaderboard view
+- Analytics and charts
+
+DATA FLOW:
+==========
+1. User visits HuggingFace model page
+2. Extension detects model slug (e.g., "meta-llama/Llama-2-7b-hf")
+3. Backend checks if evaluation exists in MongoDB
+4. If not cached:
+   - ModelAnalyzer checks model size
+   - Large model → use mock benchmark data
+   - Small model → call HF API with test dataset
+   - Compute metrics and store in DB
+5. Trust score combines: benchmark (60%) + user ratings (40%)
+6. Display in extension overlay + popup
+
+COMPARISON WITH GPT'S RECOMMENDATION:
+=====================================
+
+GPT SUGGESTED:
+- Hybrid approach: precompute popular, on-demand for rare
+- Support 60+ task categories
+- Universal evaluator framework
+- Model-specific normalization layer
+- Scheduled crawlers for updates
+
+WHAT WE CURRENTLY HAVE:
+- ✅ Hybrid system (mock for large, real for small)
+- ❌ Only 4 task types (vs 60+ categories)
+- ❌ No scheduled precomputation
+- ❌ No automatic model discovery/crawling
+- ❌ Simple test datasets (10-20 samples vs comprehensive benchmarks)
+- ❌ No model-specific output normalization
+- ✅ On-demand evaluation triggered by user
+- ✅ 24hr caching to reduce costs
+- ✅ Blockchain integration for user trust ratings
+
+GAPS TO CLOSE:
+- Expand task type coverage (CV, audio, multimodal)
+- Implement scheduled crawler for popular models
+- Build universal evaluator with output normalization
+- Add comprehensive benchmark datasets per task
+- Implement versioning for model updates
+- Add evaluation freshness tracking
+- Scale to handle 1000+ models efficiently
+
+CURRENT LIMITATIONS:
+- Small test datasets (not production-grade benchmarks)
+- Limited to text tasks primarily
+- No automatic model discovery
+- Mock data for large models (not real evaluation)
+- 24hr cache might serve stale results if model updates
+
+STRENGTHS:
+- Fast for users (instant mock, cached real)
+- Low API costs (cache + mock strategy)
+- Blockchain transparency for ratings
+- Good browser UX with extension
+- Hybrid trust score (automated + human)

@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@huggingface/inference": "^2.8.0",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "ethers": "^6.8.1",
+    "express": "^5.1.0",
+    "mongodb": "^6.19.0",
+    "natural": "^8.1.0",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2",
+    "openai": "^6.9.1",
+    "rouge": "^1.0.3"
+  }
+}

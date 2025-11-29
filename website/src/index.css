@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* VeriAI Design System - Professional AI Platform Branding 
+All colors MUST be HSL for consistency and theming.
+*/
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --background: 0 0% 100%;
+    --foreground: 215 25% 12%;
+    
+    /* VeriAI Primary Brand - Deep Blue */
+    --primary: 220 91% 21%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 91% 16%;
+    
+    /* Electric Blue Accent */
+    --electric: 217 91% 60%;
+    --electric-foreground: 0 0% 100%;
+    --electric-glow: 217 91% 60%;
+    
+    /* Success/Emerald Green */
+    --success: 158 64% 52%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Warning/Orange */
+    --warning: 32 95% 44%;
+    --warning-foreground: 0 0% 100%;
+    
+    /* Neutral Grays */
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 47%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 91% 60%;
+    
+    /* Cards & Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 12%;
+    
+    /* Secondary Colors */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 215 25% 12%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 215 25% 12%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 91% 21%), hsl(217 91% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 91% 21%) 0%, hsl(217 91% 60%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 91% 21% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 91% 21% / 0.1), 0 2px 4px -1px hsl(220 91% 21% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(220 91% 21% / 0.1), 0 4px 6px -2px hsl(220 91% 21% / 0.05);
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.3);
+    --shadow-electric: 0 8px 32px hsl(217 91% 60% / 0.2);
+    
+    /* Border Radius */
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 215 28% 7%;
+    --foreground: 210 40% 98%;
+    
+    --primary: 217 91% 60%;
+    --primary-foreground: 215 28% 7%;
+    --primary-hover: 217 91% 55%;
+    
+    --electric: 217 91% 60%;
+    --electric-foreground: 215 28% 7%;
+    
+    --success: 158 64% 52%;
+    --success-foreground: 215 28% 7%;
+    
+    --warning: 32 95% 44%;
+    --warning-foreground: 215 28% 7%;
+    
+    --card: 215 28% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 215 28% 9%;
+    --popover-foreground: 210 40% 98%;
+    
+    --muted: 215 28% 12%;
+    --muted-foreground: 215 20% 65%;
+    --border: 215 28% 18%;
+    --input: 215 28% 18%;
+    --ring: 217 91% 60%;
+    
+    --secondary: 215 28% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 215 28% 12%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(215 28% 9%), hsl(217 91% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 28% 7%) 0%, hsl(217 91% 60%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(215 28% 9%) 0%, hsl(215 28% 12%) 100%);
+    
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.4);
+    --shadow-electric: 0 8px 32px hsl(217 91% 60% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Button Variants */
+  .btn-hero {
+    @apply bg-electric text-electric-foreground hover:bg-electric/90 shadow-electric transition-all duration-300 hover:shadow-glow hover:scale-105;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary-hover shadow-md transition-all duration-300;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300;
+  }
+  
+  /* Card Styles */
+  .card-elevated {
+    @apply bg-card border border-border rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+  }
+  
+  .card-gradient {
+    background: var(--gradient-card);
+    @apply border border-border rounded-2xl shadow-lg;
+  }
+  
+  /* Text Gradients */
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px hsl(217 91% 60% / 0.2);
+  }
+  to {
+    box-shadow: 0 0 30px hsl(217 91% 60% / 0.4), 0 0 40px hsl(217 91% 60% / 0.2);
+  }
+}

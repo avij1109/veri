@@ -1,0 +1,65 @@
+[
+  {
+    "id": "bert-base-uncased",
+    "type": "huggingface",
+    "task": "text-classification",
+    "modelName": "BERT Base Uncased",
+    "description": "BERT model for text classification tasks"
+  },
+  {
+    "id": "distilbert-base-uncased-finetuned-sst-2-english",
+    "type": "huggingface", 
+    "task": "text-classification",
+    "modelName": "DistilBERT SST-2",
+    "description": "DistilBERT fine-tuned for sentiment analysis"
+  },
+  {
+    "id": "gpt2",
+    "type": "huggingface",
+    "task": "text-generation",
+    "modelName": "GPT-2",
+    "description": "OpenAI GPT-2 for text generation"
+  },
+  {
+    "id": "distilgpt2",
+    "type": "huggingface",
+    "task": "text-generation",
+    "modelName": "DistilGPT-2",
+    "description": "Smaller, faster version of GPT-2"
+  },
+  {
+    "id": "deepseek-ai/DeepSeek-V3.1-Base",
+    "type": "huggingface",
+    "task": "text-generation",
+    "modelName": "DeepSeek V3.1 Base",
+    "description": "DeepSeek's latest base model for text generation"
+  },
+  {
+    "id": "microsoft/DialoGPT-medium",
+    "type": "huggingface",
+    "task": "text-generation", 
+    "modelName": "DialoGPT Medium",
+    "description": "Microsoft's conversational AI model"
+  },
+  {
+    "id": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+    "type": "huggingface",
+    "task": "text-classification",
+    "modelName": "Twitter RoBERTa Sentiment",
+    "description": "RoBERTa fine-tuned for Twitter sentiment analysis"
+  },
+  {
+    "id": "facebook/bart-large-cnn",
+    "type": "huggingface",
+    "task": "summarization",
+    "modelName": "BART Large CNN",
+    "description": "BART model fine-tuned for summarization"
+  },
+  {
+    "id": "t5-small",
+    "type": "huggingface",
+    "task": "text2text-generation",
+    "modelName": "T5 Small",
+    "description": "T5 model for text-to-text generation tasks"
+  }
+]

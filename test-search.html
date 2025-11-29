@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Search</title>
+</head>
+<body>
+    <h1>Test Crawl Search</h1>
+    <input type="text" id="modelId" value="bert-base-uncased" style="padding: 8px; width: 300px;">
+    <button onclick="testSearch()" style="padding: 8px 16px;">Search</button>
+    <pre id="result" style="background: #f0f0f0; padding: 20px; margin-top: 20px;"></pre>
+
+    <script>
+        async function testSearch() {
+            const modelId = document.getElementById('modelId').value;
+            const resultEl = document.getElementById('result');
+            
+            resultEl.textContent = 'Searching...';
+            
+            try {
+                const url = `http://localhost:5000/api/crawl/search?q=${encodeURIComponent(modelId)}&modelId=${encodeURIComponent(modelId)}`;
+                console.log('Fetching:', url);
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log('Response:', data);
+                resultEl.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                resultEl.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

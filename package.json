@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "@huggingface/inference": "^4.8.0",
+    "axios": "^1.12.0",
+    "crypto": "^1.0.1",
+    "node-cron": "^4.2.1"
+  },
+  "name": "veriai",
+  "version": "1.0.0",
+  "main": "deploy-hybrid.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avij1109/veriAI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/avij1109/veriAI/issues"
+  },
+  "homepage": "https://github.com/avij1109/veriAI#readme",
+  "description": ""
+}

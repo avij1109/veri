@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Model Trust Detector",
+    "version": "0.2.0",
+    "description": "Detects Hugging Face models and shows an overlay with trust info.",
+    "permissions": ["storage", "activeTab", "scripting", "tabs", "management"],
+    "externally_connectable": {
+      "matches": ["*://huggingface.co/*"]
+    },
+    "web_accessible_resources": [
+      {
+              "resources": [
+        "contract.js",
+        "abi.json",
+        "connect.html",
+        "simple-test.html",
+        "test-connect.html",
+        "test-contract.html",
+        "add-fuji.html",
+        "test-ethers.html",
+        "debug-background.html",
+        "vendor/ethers-5.7.2.umd.min.js",
+        "ratings.html",
+        "ratings.js",
+        "test-metamask.html"
+      ],
+        "matches": ["<all_urls>"]
+      }
+    ],
+    "host_permissions": ["*://huggingface.co/*", "*://*/*", "http://localhost:5000/*"],
+    "content_scripts": [
+      {
+        "matches": ["*://huggingface.co/*"],
+        "js": ["content-script.js"],
+        "css": ["overlay.css"],
+        "run_at": "document_idle"
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "Model Trust Detector"
+    },
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
+  
